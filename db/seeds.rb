@@ -7,12 +7,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 user = User.create(email: 'bogdan.boamfa@gmail.com', password: 'bogdan5393')
 
-user.programs.create(
+program = user.programs.create(
   name: 'Program 1',
   goal: 'Strength',
   level: 'Intermmediate',
   private: false
 )
+
+4.times do |i|
+  program.program_days.create(
+    name: "Day "+i.to_s
+  )
+end
 
 user.programs.create(
   name: 'Program 2',

@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  programday_id: 1
+  exercise_id: 1
+
+two:
+  programday_id: 1
+  exercise_id: 1
