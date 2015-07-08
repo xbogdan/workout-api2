@@ -31,7 +31,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def create
-    days = params.permit(days: [:name, :order, :labeltype_id])[:days].values
+    days = params.permit(days: [:name])[:days].values
     program = params.permit(:name, :level, :goal, :private)
     begin
       ActiveRecord::Base.transaction do
@@ -55,7 +55,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def update
-    days_params = params.permit(days: [:id, :name, :labeltype_id])[:days].values if params[:days]
+    days_params = params.permit(days: [:id, :name])[:days].values if params[:days]
     program_params = params.permit(:id, :name, :level, :goal, :private)
 
     begin
