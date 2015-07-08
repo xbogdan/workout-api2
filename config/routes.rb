@@ -1,5 +1,22 @@
 Rails.application.routes.draw do
   devise_for :users
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      # Sessions
+      post '/signin' => 'sessions#create'
+      delete '/signout' => 'sessions#destroy'
+
+      # Users
+      post '/signup' => 'users#create'
+
+      # Programs
+      get '/programs' => 'programs#index'
+      get '/program' => 'programs#show'
+      put '/updateProgram' => 'programs#update'
+      post '/createProgram' => 'programs#create'
+      delete '/deleteProgram' => 'programs#destroy'
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
