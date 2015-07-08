@@ -15,7 +15,7 @@ program = user.programs.create(
 )
 
 4.times do |i|
-  program.program_days.create(
+  day = program.program_days.create(
     name: "Day "+i.to_s
   )
 end
