@@ -5,7 +5,7 @@ class Api::V1::ProgramsController < ApplicationController
   def index
     user_programs = current_user.programs.order(id: :asc)
     user_programs.each_with_index do |prog, key|
-      days = prog.programdays
+      days = prog.program_days
       user_programs[key] = prog.attributes
       user_programs[key][:days] = days
     end
@@ -21,7 +21,7 @@ class Api::V1::ProgramsController < ApplicationController
       raise 'Invalid program id.' unless program
 
       prog = program.attributes
-      prog[:labels] = program.labels
+      prog[:days] = program.program_days
 
       res = {:status => 'ok', :program => prog}
     rescue Exception => e
@@ -31,7 +31,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def create
-    labels = params.permit(labels: [:name, :order, :labeltype_id])[:labels].values
+    days = params.permit(days: [:name, :order, :labeltype_id])[:days].values
     program = params.permit(:name, :level, :goal, :private)
     begin
       ActiveRecord::Base.transaction do
@@ -42,8 +42,8 @@ class Api::V1::ProgramsController < ApplicationController
         new_program = current_user.programs.create!(program)
         raise 'Cannot save the program.' unless new_program
 
-        if !labels.empty?
-          raise 'Cannot add labels to program.' unless new_program.labels.create!(labels)
+        if !days.empty?
+          raise 'Cannot add days to program.' unless new_program.program_days.create!(days)
         end
 
       end
@@ -55,7 +55,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def update
-    labels_params = params.permit(labels: [:id, :name, :labeltype_id])[:labels].values if params[:labels]
+    days_params = params.permit(days: [:id, :name, :labeltype_id])[:days].values if params[:days]
     program_params = params.permit(:id, :name, :level, :goal, :private)
 
     begin
@@ -64,12 +64,12 @@ class Api::V1::ProgramsController < ApplicationController
       raise 'Program not found.' unless program
       program.update(program_params)
 
-      if params[:labels]
-        labels_ids = []
-        labels_params.each do |label|
-          labels_ids << label['id']
+      if params[:days]
+        days_ids = []
+        days_params.each do |label|
+          days_ids << label['id']
         end
-        program.labels.update(labels_ids, labels_params)
+        program.program_days.update(days_ids, days_params)
       end
       res = {status: 'ok'}
     rescue Exception => e
