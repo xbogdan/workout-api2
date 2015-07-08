@@ -5,9 +5,9 @@ class Api::V1::ProgramsController < ApplicationController
   def index
     user_programs = current_user.programs.order(id: :asc)
     user_programs.each_with_index do |prog, key|
-      labels = prog.labels
+      days = prog.programdays
       user_programs[key] = prog.attributes
-      user_programs[key][:labels] = labels
+      user_programs[key][:days] = days
     end
     render json: {:status => 'ok', :programs => user_programs}, status: 200
   end
