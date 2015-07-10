@@ -25,7 +25,13 @@ class Api::V1::ProgramsController < ApplicationController
       program_days = program.program_days
       program_days.each do |pd|
         day = pd.attributes
-        day[:exercises] = pd.exercises
+        day[:exercises] = []
+        exercises = pd.program_day_exercises.joins('left join exercises on exercises.id = program_day_exercises.exercise_id left join muscle_groups on muscle_groups.id = exercises.muscle_group_id').select('program_day_exercises.id, exercises.name, muscle_groups.name as muscle_groups_name')
+        exercises.each_with_index do |ex, i|
+          exercise = ex.attributes
+          exercise[:sets] = ex.program_day_exercise_sets
+          day[:exercises] << exercise
+        end
         prog[:days] << day
       end
       # Program.joins('LEFT JOIN program_days on programs.id = program_days.program_id LEFT JOIN program_day_exercises ON program_days.id = program_day_exercises.program_day_id').order('program_days.id')
