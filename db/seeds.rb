@@ -26,3 +26,26 @@ user.programs.create(
   level: 'Advanced',
   private: true
 )
+
+MuscleGroup.create(id: 1, name: 'Triceps')
+MuscleGroup.create(id: 2, name: 'Biceps')
+MuscleGroup.create(id: 3, name: 'Chest')
+MuscleGroup.create(id: 4, name: 'Shoulder')
+MuscleGroup.create(id: 5, name: 'Lats')
+MuscleGroup.create(id: 6, name: 'Traps')
+MuscleGroup.create(id: 7, name: 'Hamstrings')
+MuscleGroup.create(id: 8, name: 'Quadriceps')
+MuscleGroup.create(id: 9, name: 'Forearm')
+MuscleGroup.create(id: 10, name: 'Lower back')
+MuscleGroup.create(id: 11, name: 'Middle back')
+MuscleGroup.create(id: 12, name: 'Calves')
+MuscleGroup.create(id: 13, name: 'Glutes')
+MuscleGroup.create(id: 14, name: 'Abs')
+
+Exercise.create(name: 'Skullcrasher', muscle_group_id: 1)
+Exercise.create(name: 'Close grip barbell bench press', muscle_group_id: 1)
+Exercise.create(name: 'Barbell curl', muscle_group_id: 2)
+Exercise.create(name: 'Dumbell alternate biceps curl', muscle_group_id: 2)
+Exercise.create(name: 'Barbell bench press', muscle_group_id: 3)
+Exercise.create(name: 'Dumbell bench press', muscle_group_id: 3)
+Exercise.create(name: 'Include dumbell bench press', muscle_group_id: 3)
