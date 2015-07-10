@@ -5,28 +5,6 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-user = User.create(email: 'bogdan.boamfa@gmail.com', password: 'bogdan5393')
-
-program = user.programs.create(
-  name: 'Program 1',
-  goal: 'Strength',
-  level: 'Intermmediate',
-  private: false
-)
-
-4.times do |i|
-  day = program.program_days.create(
-    name: "Day "+i.to_s
-  )
-end
-
-user.programs.create(
-  name: 'Program 2',
-  goal: 'Muscle',
-  level: 'Advanced',
-  private: true
-)
-
 MuscleGroup.create(id: 1, name: 'Triceps')
 MuscleGroup.create(id: 2, name: 'Biceps')
 MuscleGroup.create(id: 3, name: 'Chest')
@@ -42,10 +20,29 @@ MuscleGroup.create(id: 12, name: 'Calves')
 MuscleGroup.create(id: 13, name: 'Glutes')
 MuscleGroup.create(id: 14, name: 'Abs')
 
-Exercise.create(name: 'Skullcrasher', muscle_group_id: 1)
-Exercise.create(name: 'Close grip barbell bench press', muscle_group_id: 1)
-Exercise.create(name: 'Barbell curl', muscle_group_id: 2)
-Exercise.create(name: 'Dumbell alternate biceps curl', muscle_group_id: 2)
-Exercise.create(name: 'Barbell bench press', muscle_group_id: 3)
-Exercise.create(name: 'Dumbell bench press', muscle_group_id: 3)
-Exercise.create(name: 'Include dumbell bench press', muscle_group_id: 3)
+Exercise.create(id: 1, name: 'Skullcrasher', muscle_group_id: 1)
+Exercise.create(id: 2, name: 'Close grip barbell bench press', muscle_group_id: 1)
+Exercise.create(id: 3, name: 'Barbell curl', muscle_group_id: 2)
+Exercise.create(id: 4, name: 'Dumbell alternate biceps curl', muscle_group_id: 2)
+Exercise.create(id: 5, name: 'Barbell bench press', muscle_group_id: 3)
+Exercise.create(id: 6, name: 'Dumbell bench press', muscle_group_id: 3)
+Exercise.create(id: 7, name: 'Include dumbell bench press', muscle_group_id: 3)
+
+user = User.create(email: 'bogdan.boamfa@gmail.com', password: 'bogdan5393')
+
+program = user.programs.create(
+  name: 'Program 1',
+  goal: 'Strength',
+  level: 'Intermmediate',
+  private: false
+)
+
+4.times do |i|
+  day = program.program_days.create(
+    name: "Day "+i.to_s
+  )
+  day.program_day_exercises.create(exercise_id: rand(1..7))
+  day.program_day_exercises.create(exercise_id: rand(1..7))
+  day.program_day_exercises.create(exercise_id: rand(1..7))
+  day.program_day_exercises.create(exercise_id: rand(1..7))
+end
