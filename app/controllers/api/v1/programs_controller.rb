@@ -52,7 +52,7 @@ class Api::V1::ProgramsController < ApplicationController
         raise 'Invalid program private.' unless program[:private]
         new_program = current_user.programs.create!(program)
         raise 'Cannot save the program.' unless new_program
-        
+
       end
       res = {status: 'ok'}
     rescue Exception => e
