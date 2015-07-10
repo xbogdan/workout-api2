@@ -43,8 +43,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def create
-    days = params.permit(days: [:name])[:days].values
-    program = params.permit(:name, :level, :goal, :private)
+    program = params.permit(:name, :level, :goal, :private, program_days_attributes: [:name, program_day_exercises_attributes: [:exercise_id, program_day_exercise_sets_attributes: [:reps]]])
     begin
       ActiveRecord::Base.transaction do
         raise 'Invalid program name.' unless program[:name]
@@ -53,11 +52,7 @@ class Api::V1::ProgramsController < ApplicationController
         raise 'Invalid program private.' unless program[:private]
         new_program = current_user.programs.create!(program)
         raise 'Cannot save the program.' unless new_program
-
-        if !days.empty?
-          raise 'Cannot add days to program.' unless new_program.program_days.create!(days)
-        end
-
+        
       end
       res = {status: 'ok'}
     rescue Exception => e
@@ -67,22 +62,14 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def update
-    days_params = params.permit(days: [:id, :name])[:days].values if params[:days]
-    program_params = params.permit(:id, :name, :level, :goal, :private)
+    program = params.permit(:id, :name, :level, :goal, :private, program_days_attributes: [:id, :name, program_day_exercises_attributes: [:id, :exercise_id, program_day_exercise_sets_attributes: [:id, :reps]]])
 
     begin
       raise 'Invalid program id.' unless program_params[:id]
       program = Program.find_by_id(program_params[:id])
       raise 'Program not found.' unless program
-      program.update(program_params)
+      program.update!(program_params)
 
-      if params[:days]
-        days_ids = []
-        days_params.each do |label|
-          days_ids << label['id']
-        end
-        program.program_days.update(days_ids, days_params)
-      end
       res = {status: 'ok'}
     rescue Exception => e
       res = {status: 'error', error: e.message}
