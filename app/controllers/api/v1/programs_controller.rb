@@ -34,7 +34,6 @@ class Api::V1::ProgramsController < ApplicationController
         end
         prog[:days] << day
       end
-      # Program.joins('LEFT JOIN program_days on programs.id = program_days.program_id LEFT JOIN program_day_exercises ON program_days.id = program_day_exercises.program_day_id').order('program_days.id')
 
       res = {:status => 'ok', :program => prog}
     rescue Exception => e
