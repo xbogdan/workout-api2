@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
       # Users
       post '/signup' => 'users#create'
+      match '/signin', to: 'sessions#create', via: [:options, :post]
 
       # Programs
       get '/programs' => 'programs#index'
