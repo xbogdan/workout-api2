@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   # For all responses in this controller, return the CORS access control headers.
   def cors_set_access_control_headers
     headers['Access-Control-Allow-Origin'] = 'http://localhost:9000'
-    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
+    headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS, PATCH'
     headers['Access-Control-Max-Age'] = "1728000"
   end
 
@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
   def cors_preflight_check
     if request.method == 'OPTIONS'
       headers['Access-Control-Allow-Origin'] = 'http://localhost:9000'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, X-Requested-With, X-Prototype-Version, Token'
+      headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS, PATCH'
+      headers['Access-Control-Allow-Headers'] = 'Origin, Content-Type, X-Requested-With, X-Prototype-Version, Token, Authorization'
       headers['Access-Control-Max-Age'] = '1728000'
       headers['Access-Control-Allow-Credentials'] = 'true'
 

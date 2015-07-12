@@ -3,19 +3,18 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       # Sessions
-      post '/signin' => 'sessions#create'
-      delete '/signout' => 'sessions#destroy'
+      match '/signin', to: 'sessions#create', via: [:post, :options]
+      match '/signout' => 'sessions#destroy', via: [:delete, :options]
 
       # Users
-      post '/signup' => 'users#create'
-      match '/signin', to: 'sessions#create', via: [:options, :post]
+      match '/signup' => 'users#create', via: [:post, :options]
 
       # Programs
-      get '/programs' => 'programs#index'
-      get '/program' => 'programs#show'
-      put '/updateProgram' => 'programs#update'
-      post '/createProgram' => 'programs#create'
-      delete '/deleteProgram' => 'programs#destroy'
+      match '/programs' => 'programs#index', via: [:get, :options]
+      match '/program' => 'programs#show', via: [:get, :options]
+      match '/updateProgram' => 'programs#update', via: [:put, :options]
+      match '/createProgram' => 'programs#create', via: [:post, :options]
+      match '/deleteProgram' => 'programs#destroy', via: [:delete, :options]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
