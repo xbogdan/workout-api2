@@ -41,8 +41,10 @@ program = user.programs.create(
   day = program.program_days.create(
     name: "Day "+i.to_s
   )
-  day.program_day_exercises.create(exercise_id: rand(1..7))
-  day.program_day_exercises.create(exercise_id: rand(1..7))
-  day.program_day_exercises.create(exercise_id: rand(1..7))
-  day.program_day_exercises.create(exercise_id: rand(1..7))
+  4.times do |j|
+    pde = day.program_day_exercises.create(exercise_id: rand(1..7))
+    3.times do |j|
+      pde.program_day_exercise_sets.create(reps: rand(4..8))
+    end
+  end
 end
