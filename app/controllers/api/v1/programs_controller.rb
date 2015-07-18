@@ -21,18 +21,18 @@ class Api::V1::ProgramsController < ApplicationController
       raise 'Invalid program id.' unless program
 
       prog = program.attributes
-      prog[:days] = []
+      prog[:program_days_attributes] = []
       program_days = program.program_days
       program_days.each do |pd|
         day = pd.attributes
-        day[:exercises] = []
+        day[:program_day_exercises_attributes] = []
         exercises = pd.program_day_exercises.joins('left join exercises on exercises.id = program_day_exercises.exercise_id left join muscle_groups on muscle_groups.id = exercises.muscle_group_id').select('program_day_exercises.id, exercises.name, muscle_groups.name as muscle_groups_name')
         exercises.each_with_index do |ex, i|
           exercise = ex.attributes
-          exercise[:sets] = ex.program_day_exercise_sets
-          day[:exercises] << exercise
+          exercise[:program_day_exercise_sets_attributes] = ex.program_day_exercise_sets
+          day[:program_day_exercises_attributes] << exercise
         end
-        prog[:days] << day
+        prog[:program_days_attributes] << day
       end
 
       res = {:status => 'ok', :program => prog}
@@ -43,7 +43,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def create
-    program = params.permit(:name, :level, :goal, :private, program_days_attributes: [:name, program_day_exercises_attributes: [:exercise_id, program_day_exercise_sets_attributes: [:reps]]])
+    program = params.permit(:name, :level, :goal, :private, program_days_attributes: [:name, program_day_exercises_attributes: [:exercise_id, program_day_exercise_sets_attributes: [:reps, :program_day_exercise_id]]])
     begin
       ActiveRecord::Base.transaction do
         raise 'Invalid program name.' unless program[:name]
@@ -62,8 +62,8 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def update
-    program = params.permit(:id, :name, :level, :goal, :private, program_days_attributes: [:id, :name, program_day_exercises_attributes: [:id, :exercise_id, program_day_exercise_sets_attributes: [:id, :reps]]])
-
+    program_params = params.require(:program).permit(:id, :name, :level, :goal, :private, program_days_attributes: [:id, :name, program_day_exercises_attributes: [:id, :exercise_id, program_day_exercise_sets_attributes: [:id, :reps, :program_day_exercise_id]]])
+    
     begin
       raise 'Invalid program id.' unless program_params[:id]
       program = Program.find_by_id(program_params[:id])
