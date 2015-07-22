@@ -62,7 +62,7 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def update
-    program_params = params.require(:program).permit(:id, :name, :level, :goal, :private, program_days_attributes: [:id, :name, :ord, program_day_exercises_attributes: [:id, :exercise_id, :ord, program_day_exercise_sets_attributes: [:id, :reps, :ord, :program_day_exercise_id]]])
+    program_params = params.require(:program).permit(:id, :name, :level, :goal, :private, :_destroy, program_days_attributes: [:id, :name, :ord, :_destroy, program_day_exercises_attributes: [:id, :exercise_id, :ord, :_destroy, program_day_exercise_sets_attributes: [:id, :reps, :ord, :_destroy, :program_day_exercise_id]]])
 
     begin
       raise 'Invalid program id.' unless program_params[:id]
