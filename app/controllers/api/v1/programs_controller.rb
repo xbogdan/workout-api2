@@ -22,14 +22,14 @@ class Api::V1::ProgramsController < ApplicationController
 
       prog = program.attributes
       prog[:program_days_attributes] = []
-      program_days = program.program_days
+      program_days = program.program_days.order('ord ASC')
       program_days.each do |pd|
         day = pd.attributes
         day[:program_day_exercises_attributes] = []
-        exercises = pd.program_day_exercises.joins('left join exercises on exercises.id = program_day_exercises.exercise_id left join muscle_groups on muscle_groups.id = exercises.muscle_group_id').select('program_day_exercises.id, exercises.name, muscle_groups.name as muscle_groups_name')
+        exercises = pd.program_day_exercises.joins('left join exercises on exercises.id = program_day_exercises.exercise_id left join muscle_groups on muscle_groups.id = exercises.muscle_group_id').select('program_day_exercises.id, exercises.name, muscle_groups.name as muscle_groups_name').order('ord ASC')
         exercises.each_with_index do |ex, i|
           exercise = ex.attributes
-          exercise[:program_day_exercise_sets_attributes] = ex.program_day_exercise_sets
+          exercise[:program_day_exercise_sets_attributes] = ex.program_day_exercise_sets.order('ord ASC')
           day[:program_day_exercises_attributes] << exercise
         end
         prog[:program_days_attributes] << day
@@ -62,8 +62,8 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def update
-    program_params = params.require(:program).permit(:id, :name, :level, :goal, :private, program_days_attributes: [:id, :name, program_day_exercises_attributes: [:id, :exercise_id, program_day_exercise_sets_attributes: [:id, :reps, :program_day_exercise_id]]])
-    
+    program_params = params.require(:program).permit(:id, :name, :level, :goal, :private, program_days_attributes: [:id, :name, :ord, program_day_exercises_attributes: [:id, :exercise_id, :ord, program_day_exercise_sets_attributes: [:id, :reps, :ord, :program_day_exercise_id]]])
+
     begin
       raise 'Invalid program id.' unless program_params[:id]
       program = Program.find_by_id(program_params[:id])
