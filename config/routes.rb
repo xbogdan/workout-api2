@@ -15,6 +15,9 @@ Rails.application.routes.draw do
       match '/updateProgram' => 'programs#update', via: [:put, :options]
       match '/createProgram' => 'programs#create', via: [:post, :options]
       match '/deleteProgram' => 'programs#destroy', via: [:delete, :options]
+
+      # Exercises
+      match '/exercises' => 'exercises#index', via: [:get, :options]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
