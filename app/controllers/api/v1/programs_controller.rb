@@ -36,29 +36,33 @@
       end
 
       res = {:status => 'ok', :program => prog}
+      status = 200
     rescue Exception => e
       res = {status: 'error', error: e.message}
+      status = 400
     end
-    render json: res, status: 200
+    render json: res, status: status
   end
 
   def create
     program = params.require(:program).permit(:name, :level, :goal, :private, program_days_attributes: [:name, program_day_exercises_attributes: [:exercise_id, program_day_exercise_sets_attributes: [:reps, :program_day_exercise_id]]])
     begin
       ActiveRecord::Base.transaction do
-        raise 'Invalid program name.' unless program[:name]
-        raise 'Invalid program level.' unless program[:level]
-        raise 'Invalid program goal.' unless program[:goal]
-        raise 'Invalid program private.' unless program[:private]
+        raise 'Invalid program name.' if program[:name].blank?
+        raise 'Invalid program level.' if program[:level].blank?
+        raise 'Invalid program goal.' if program[:goal].blank?
+        raise 'Invalid program private.' if program[:private].nil?
         new_program = current_user.programs.create!(program)
         raise 'Cannot save the program.' unless new_program
 
       end
-      res = {status: 'ok'}
+      res = { status: 'ok' }
+      status = 201
     rescue Exception => e
-      res = {status: 'error', error: e.message}
+      res = { status: 'error', error: e.message }
+      status = 400
     end
-    render json: res
+    render json: res, status: status
   end
 
   def update
@@ -71,10 +75,12 @@
       program.update!(program_params)
 
       res = {status: 'ok'}
+      status = 200
     rescue Exception => e
       res = {status: 'error', error: e.message}
+      status = 400
     end
-    render json: res, status: 200
+    render json: res, status: status
   end
 
   def destroy
@@ -85,9 +91,11 @@
       raise 'Invalid program id.' unless program
       program.destroy
       res = {status: 'ok'}
+      status = 200
     rescue Exception => e
       res = {status: 'error', error: e.message}
+      status = 400
     end
-    render json: res, status: 200
+    render json: res, status: status
   end
 end
