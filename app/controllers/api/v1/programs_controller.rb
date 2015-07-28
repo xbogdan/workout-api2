@@ -43,13 +43,13 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def create
-    program = params.permit(:name, :level, :goal, :private, program_days_attributes: [:name, program_day_exercises_attributes: [:exercise_id, program_day_exercise_sets_attributes: [:reps, :program_day_exercise_id]]])
+    program = params.require(:program).permit(:name, :level, :goal, :private, program_days_attributes: [:name, program_day_exercises_attributes: [:exercise_id, program_day_exercise_sets_attributes: [:reps, :program_day_exercise_id]]])
     begin
       ActiveRecord::Base.transaction do
         raise 'Invalid program name.' unless program[:name]
         raise 'Invalid program level.' unless program[:level]
         raise 'Invalid program goal.' unless program[:goal]
-        raise 'Invalid program private.' unless program[:private]
+        # raise 'Invalid program private.' unless program[:private]
         new_program = current_user.programs.create!(program)
         raise 'Cannot save the program.' unless new_program
 
