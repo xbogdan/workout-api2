@@ -1,4 +1,4 @@
-class Api::V1::ProgramsController < ApplicationController
+  class Api::V1::ProgramsController < ApplicationController
   before_action :authenticate_with_token!
   respond_to :json
 
@@ -49,7 +49,7 @@ class Api::V1::ProgramsController < ApplicationController
         raise 'Invalid program name.' unless program[:name]
         raise 'Invalid program level.' unless program[:level]
         raise 'Invalid program goal.' unless program[:goal]
-        # raise 'Invalid program private.' unless program[:private]
+        raise 'Invalid program private.' unless program[:private]
         new_program = current_user.programs.create!(program)
         raise 'Cannot save the program.' unless new_program
 
