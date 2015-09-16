@@ -46,7 +46,7 @@
 
   def create
     program = params.require(:program).permit(:name, :level, :goal, :private,
-                                              program_days_attributes: [:name, :rest_day, :ord
+                                              program_days_attributes: [:name, :rest_day, :ord,
                                                 program_day_exercises_attributes: [:exercise_id, :ord,
                                                   program_day_exercise_sets_attributes: [:reps, :ord, :program_day_exercise_id]]])
     begin
@@ -70,7 +70,7 @@
 
   def update
     program_params = params.require(:program).permit(:id, :name, :level, :goal, :private, :_destroy,
-                                                    program_days_attributes: [:id, :name, :ord, :_destroy,
+                                                    program_days_attributes: [:id, :name, :ord, :rest_day, :_destroy,
                                                       program_day_exercises_attributes: [:id, :exercise_id, :ord, :_destroy,
                                                         program_day_exercise_sets_attributes: [:id, :reps, :ord, :_destroy, :program_day_exercise_id]]])
 
