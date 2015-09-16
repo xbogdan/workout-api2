@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  track_day_exercise_id: 1
+  reps: 1
+  weight: 1.5
+
+two:
+  track_day_exercise_id: 1
+  reps: 1
+  weight: 1.5
