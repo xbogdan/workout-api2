@@ -15,4 +15,5 @@ class User < ActiveRecord::Base
   end
 
   has_many :programs
+  has_many :tracks
 end

@@ -16,6 +16,13 @@ Rails.application.routes.draw do
       match '/createProgram' => 'programs#create', via: [:post, :options]
       match '/deleteProgram' => 'programs#destroy', via: [:delete, :options]
 
+      # Tracks
+      match '/tracks' => 'tracks#index', via: [:get, :options]
+      match '/track' => 'tracks#show', via: [:get, :options]
+      match '/updateTrack' => 'tracks#update', via: [:put, :options]
+      match '/createTrack' => 'tracks#create', via: [:post, :options]
+      match '/deleteTrack' => 'tracks#destroy', via: [:delete, :options]
+
       # Exercises
       match '/exercises' => 'exercises#index', via: [:get, :options]
     end

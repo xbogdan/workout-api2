@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150916144029) do
+ActiveRecord::Schema.define(version: 20150917072346) do
 
   create_table "exercises", force: :cascade do |t|
     t.string   "name"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 20150916144029) do
     t.float    "weight"
     t.datetime "created_at",            null: false
     t.datetime "updated_at",            null: false
+    t.integer  "ord"
   end
 
   create_table "track_day_exercises", force: :cascade do |t|
@@ -76,13 +77,16 @@ ActiveRecord::Schema.define(version: 20150916144029) do
     t.integer  "exercise_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "ord"
   end
 
   create_table "track_days", force: :cascade do |t|
     t.integer  "track_id"
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.date     "date"
+    t.integer  "program_day_id"
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -90,6 +94,7 @@ ActiveRecord::Schema.define(version: 20150916144029) do
     t.integer  "program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "name"
   end
 
   create_table "users", force: :cascade do |t|
