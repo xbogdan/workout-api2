@@ -22,7 +22,7 @@
 
       prog = track.attributes
       prog[:track_days_attributes] = []
-      track_days = track.track_days.order(created_at: :desc)
+      track_days = track.track_days.order(date: :desc)
       track_days.each do |pd|
         day = pd.attributes
         day[:track_day_exercises_attributes] = []
