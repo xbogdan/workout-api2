@@ -1,4 +1,4 @@
-module Authenticable extend ActiveSupport::Concern 
+module Boamfa extend ActiveSupport::Concern 
   # Devise methods overwrites
   def current_user
     @current_user ||= User.find_by(auth_token: request.headers['Authorization'])
