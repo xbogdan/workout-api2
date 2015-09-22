@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150917072346) do
+ActiveRecord::Schema.define(version: 20150918212552) do
 
   create_table "exercises", force: :cascade do |t|
     t.string   "name"
@@ -85,7 +85,7 @@ ActiveRecord::Schema.define(version: 20150917072346) do
     t.string   "name"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
-    t.date     "date"
+    t.datetime "date"
     t.integer  "program_day_id"
   end
 

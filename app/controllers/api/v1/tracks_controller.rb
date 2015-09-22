@@ -52,9 +52,6 @@
     begin
       ActiveRecord::Base.transaction do
         raise 'Invalid track name.' if track[:name].blank?
-        raise 'Invalid track level.' if track[:level].blank?
-        raise 'Invalid track goal.' if track[:goal].blank?
-        raise 'Invalid track private.' if track[:private].nil?
         new_track = current_user.tracks.create!(track)
         raise 'Cannot save the track.' unless new_track
 
@@ -70,7 +67,7 @@
 
   def update
     track_params = params.require(:track).permit(:id, :name, :_destroy,
-                                                    track_days_attributes: [:id, :name, :_destroy,
+                                                    track_days_attributes: [:id, :name, :date, :_destroy,
                                                       track_day_exercises_attributes: [:id, :exercise_id, :ord, :_destroy,
                                                         track_day_exercise_sets_attributes: [:id, :reps, :weight, :ord, :_destroy, :track_day_exercise_id]]])
 
