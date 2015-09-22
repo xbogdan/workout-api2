@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       # Sessions
-      match '/signin', to: 'sessions#create', via: [:post, :options]
+      match '/signin' =>'sessions#create', via: [:post, :options]
       match '/signout' => 'sessions#destroy', via: [:delete, :options]
 
       # Users

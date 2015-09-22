@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
     headers['Access-Control-Allow-Origin'] = request.headers['Origin']
     headers['Access-Control-Allow-Methods'] = 'POST, GET, PUT, DELETE, OPTIONS, PATCH'
     headers['Access-Control-Max-Age'] = "1728000"
+    headers['Access-Control-Allow-Credentials'] = 'true'
   end
 
   # If this is a preflight OPTIONS request, then short-circuit the
