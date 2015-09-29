@@ -23,7 +23,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV["PG_DB"] %>
+  database: <%= ENV["DB_DB"] %>
   pool: 5
-  username: <%= ENV["PG_USER"] %>
-  password: <%= ENV["PG_PASSWORD"] %>
+  username: <%= ENV["DB_USER"] %>
+  password: <%= ENV["DB_PASSWORD"] %>
