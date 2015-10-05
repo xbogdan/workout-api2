@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       # Sessions
@@ -7,7 +8,7 @@ Rails.application.routes.draw do
       match '/signout' => 'sessions#destroy', via: [:delete, :options]
 
       # Users
-      match '/signup' => 'users#create', via: [:post, :options]
+      match '/signup' => 'sessions#register', via: [:post, :options]
 
       # Programs
       match '/programs' => 'programs#index', via: [:get, :options]
