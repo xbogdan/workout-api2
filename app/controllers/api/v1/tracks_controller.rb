@@ -46,7 +46,7 @@
 
   def create
     track = params.require(:track).permit(:name, :program_id,
-                                              track_days_attributes: [:name,
+                                              track_days_attributes: [:name, :date,
                                                 track_day_exercises_attributes: [:exercise_id, :ord,
                                                   track_day_exercise_sets_attributes: [:reps, :weight, :ord, :track_day_exercise_id]]])
     begin
