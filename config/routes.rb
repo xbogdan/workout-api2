@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       # Exercises
       match '/exercises' => 'exercises#index', via: [:get, :options]
       match '/createExercise' => 'exercises#create', via: [:post, :options]
+      match '/deleteExercise' => 'exercises#destroy', via: [:delete, :options]
 
       # Muscle Groups
       match '/muscleGroups' => 'muscle_groups#index', via: [:get, :options]
