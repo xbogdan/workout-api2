@@ -26,7 +26,7 @@
       track_days.each do |pd|
         day = pd.attributes
         day[:track_day_exercises_attributes] = []
-        exercises = pd.track_day_exercises.joins('left join exercises on exercises.id = track_day_exercises.exercise_id left join muscle_groups on muscle_groups.id = exercises.muscle_group_id').select('track_day_exercises.id, track_day_exercises.exercise_id, exercises.name, muscle_groups.name as muscle_groups_name').order('track_day_exercises.ord ASC')
+        exercises = pd.track_day_exercises.joins('left join exercises on exercises.id = track_day_exercises.exercise_id left join muscle_groups on muscle_groups.id = exercises.muscle_group_id').select('track_day_exercises.id, track_day_exercises.ord, track_day_exercises.exercise_id, exercises.name, muscle_groups.name as muscle_groups_name').order('track_day_exercises.ord ASC')
         exercises.each_with_index do |ex, i|
           exercise = ex.attributes
           exercise[:track_day_exercise_sets_attributes] = ex.track_day_exercise_sets.order('ord ASC')
