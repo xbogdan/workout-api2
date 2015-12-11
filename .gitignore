@@ -40,3 +40,4 @@ bower.json
 /config/application.yml
 
 .DS_Store
+.keep

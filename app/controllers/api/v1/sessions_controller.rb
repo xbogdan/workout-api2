@@ -27,7 +27,7 @@ class Api::V1::SessionsController < ApplicationController
       raise 'Invalid password' if params[:password].length == 0 || params[:confirmation_password].length == 0
       raise 'Password too short' if params[:password].length < 6
       raise 'Passwords don\'t match' if params[:password] != params[:confirmation_password]
-      
+
       user = User.create!(email: params[:email], password: params[:password])
       sign_in user, store: false
       user.generate_authentication_token!
