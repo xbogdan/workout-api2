@@ -24,6 +24,11 @@ Rails.application.routes.draw do
       match '/createTrack' => 'tracks#create', via: [:post, :options]
       match '/deleteTrack' => 'tracks#destroy', via: [:delete, :options]
 
+      match '/createTrackDay' => 'track_days#create', via: [:post, :options]
+      match '/deleteTrackDay' => 'track_days#destroy', via: [:delete, :options]
+
+      match '/deleteTrackDayExercise' => 'track_day_exercises#destroy', via: [:delete, :options]
+
       # Exercises
       match '/exercises' => 'exercises#index', via: [:get, :options]
       match '/createExercise' => 'exercises#create', via: [:post, :options]

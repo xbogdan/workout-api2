@@ -25,6 +25,7 @@
         user_tracks[key] = prog
       end
     end
+    p user_tracks[0][:track_days_attributes]
     render json: {:status => 'ok', :tracks => user_tracks}, status: 200
   end
 
@@ -71,7 +72,6 @@
         raise 'Invalid track name.' if track[:name].blank?
         new_track = current_user.tracks.create!(track)
         raise 'Cannot save the track.' unless new_track
-
       end
       res = { status: 'ok', track_id: new_track.id }
       status = 201
@@ -100,6 +100,7 @@
       res = {status: 'error', error: e.message}
       status = 400
     end
+
     render json: res, status: status
   end
 
@@ -107,8 +108,10 @@
     track_id = params[:id]
     begin
       raise 'Invalid track id.' unless track_id
+
       track = current_user.tracks.find_by_id(track_id)
       raise 'Invalid track id.' unless track
+
       track.destroy
       res = {status: 'ok'}
       status = 200
@@ -116,6 +119,7 @@
       res = {status: 'error', error: e.message}
       status = 400
     end
+
     render json: res, status: status
   end
 end

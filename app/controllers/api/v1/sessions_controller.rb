@@ -6,8 +6,8 @@ class Api::V1::SessionsController < ApplicationController
 
     if user && user.valid_password?(user_password)
       sign_in user, store: false
-      user.generate_authentication_token!
-      user.save
+      # user.generate_authentication_token!
+      # user.save
       render json: user, status: 200
     else
       render json: { error: "Invalid email or password" }, status: 401
