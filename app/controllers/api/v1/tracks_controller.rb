@@ -5,10 +5,6 @@
   def index
     user_tracks = current_user.tracks.order(id: :asc)
     user_tracks.each_with_index do |track, key|
-      # days = track.track_days
-      # user_tracks[key] = track.attributes
-
-
       prog = track.attributes
       prog[:track_days_attributes] = []
       track_days = track.track_days.order(date: :desc)

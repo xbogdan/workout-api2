@@ -3,17 +3,17 @@ class Api::V1::TrackDaysController < ApplicationController
   respond_to :json
 
   def create
-    track_params = params.permit(:track_id, :date)
     begin
-      track_id = params[:track_id]
-      raise 'Invalid track id.' unless track_id
+      raise 'Invalid track id.' unless params[:track_id]
 
-      track = Track.where(id: track_id, user_id: current_user.id).first
+      track = Track.find_by_id(params[:track_id])
       raise 'Invalid track id.' unless track
+
+      raise 'Invalid track id.' unless track.user_id = current_user.id
 
       new_track_day = nil
       ActiveRecord::Base.transaction do
-        new_track_day = track.track_days.create!(date: track_params[:date])
+        new_track_day = track.track_days.create!(date: params[:date])
         raise 'Cannot save the track day.' unless new_track_day
       end
 
@@ -28,18 +28,16 @@ class Api::V1::TrackDaysController < ApplicationController
   end
 
   def update
-    params = params.permit(:id, :date)
     begin
-      raise 'Invalid day id.' unless params[:id]
+      raise 'Invalid id.' unless params[:id]
 
-      day = TrackDay.find_by_id(id)
-      raise 'Invalid day id.' unless day
+      track_day = TrackDay.find_by_id(id)
+      raise 'Invalid id.' unless track_day
 
-      track = current_user.tracks.find_by_id(day.track_id)
-      raise 'Invalid day id.' unless track
+      track = current_user.tracks.find_by_id(track_day.track_id)
+      raise 'Invalid id.' unless track
 
-      day.date = params[:date]
-      # day.update()
+      track_day.update! date: params[:date]
 
       res = {status: 'ok'}
       status = 200
@@ -52,17 +50,17 @@ class Api::V1::TrackDaysController < ApplicationController
   end
 
   def destroy
-    id = params[:id]
     begin
-      raise 'Invalid day id.' unless id
+      raise 'Invalid day id.' unless params[:id]
 
-      day = TrackDay.find_by_id(id)
+      day = TrackDay.find_by_id(params[:id])
       raise 'Invalid day id.' unless day
 
       track = current_user.tracks.find_by_id(day.track_id)
       raise 'Invalid day id.' unless track
 
       day.destroy
+
       res = {status: 'ok'}
       status = 200
     rescue Exception => e
