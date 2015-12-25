@@ -54,7 +54,7 @@ server 'home.boamfa.com',
   roles: %w{web app},
   ssh_options: {
     user: 'pi', # overrides user setting above
-    keys: %w(/Users/bogdanboamfa/.ssh/id_rsa),
+    keys: %w(/Users/bogdan/.ssh/id_rsa),
     forward_agent: false,
     auth_methods: %w(publickey)
     # password: 'please use keys'
