@@ -31,7 +31,7 @@ class Api::V1::TrackDaysController < ApplicationController
     begin
       raise 'Invalid id.' unless params[:id]
 
-      track_day = TrackDay.find_by_id(id)
+      track_day = TrackDay.find_by_id(params[:id])
       raise 'Invalid id.' unless track_day
 
       track = current_user.tracks.find_by_id(track_day.track_id)
@@ -43,6 +43,7 @@ class Api::V1::TrackDaysController < ApplicationController
       status = 200
     rescue Exception => e
       res = {status: 'error', error: e.message}
+      p e.message
       status = 400
     end
 
