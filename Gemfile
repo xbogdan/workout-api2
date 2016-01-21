@@ -62,3 +62,9 @@ end
 gem 'devise'
 
 gem 'figaro'
+
+gem 'httparty'
+
+gem 'nokogiri'
+
+gem 'ruby-progressbar', '~> 1.7', '>= 1.7.5'
