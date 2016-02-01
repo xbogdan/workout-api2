@@ -38,7 +38,8 @@ namespace :fitclick do
 					ex_name = ex.css(".exercise-calories-list-right_A").first.css('.exercise-item-name').attribute('title').value
 
 					# Exercise group
-					ex_group = ex.css(".exercise-calories-list-right_A").first.css('.exercise-item-footer>div:not(.exercise-calories-list-width_A)>.food-type-name>a').attribute('title').value
+					ex_big_group = ex.css(".exercise-calories-list-right_A").first.css('.exercise-item-footer>div:not(.exercise-calories-list-width_A)>.food-type-name>a').attribute('title').value
+					ex_group = ex.css(".exercise-calories-list-right_A").first.css('.exercise-item-footer>div.exercise-calories-list-width_A>.food-type-name>a').attribute('title').value
 				rescue NoMethodError
 					next
 				end
@@ -46,9 +47,19 @@ namespace :fitclick do
 				# 	puts "#{ex_name}\t\t - #{ex_group}"
 				exercise = Exercise.find_by_name ex_name
 				next if exercise
+
+				bmg = MuscleGroup.find_by_name ex_big_group
+				if !bmg
+					bmg = MuscleGroup.create name: ex_big_group, muscle_group_id: nil
+				end
+
 				mg = MuscleGroup.find_by_name ex_group
-				mg = MuscleGroup.create name: ex_group if !mg
-				mg.exercises.create name: ex_name
+				if !mg
+					mg = MuscleGroup.create name: ex_group, muscle_group_id: bmg.id
+				end
+
+				exercise = Exercise.create name: ex_name
+				exercise.exercise_muscle_groups.create muscle_group_id: mg.id, primary: true
 			end
 		end
 

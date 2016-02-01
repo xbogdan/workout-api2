@@ -44,6 +44,9 @@ Rails.application.routes.draw do
       # Muscle Groups
       match '/muscleGroups' => 'muscle_groups#index', via: [:get, :options]
       match '/createMuscleGroup' => 'muscle_groups#create', via: [:post, :options]
+
+      # Muscle Groups
+      match '/exerciseMuscleGroups' => 'exercise_muscle_groups#index', via: [:get, :options]
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

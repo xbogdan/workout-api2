@@ -11,22 +11,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121145318) do
+ActiveRecord::Schema.define(version: 20160123082651) do
+
+  create_table "exercise_muscle_groups", force: :cascade do |t|
+    t.integer  "exercise_id"
+    t.integer  "muscle_group_id"
+    t.boolean  "primary"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "exercise_muscle_groups", ["exercise_id", "muscle_group_id"], name: "index_exercise_muscle_groups_on_ex_id_and_mg_id", unique: true
 
   create_table "exercises", force: :cascade do |t|
     t.string   "name"
-    t.integer  "muscle_group_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
   end
 
   add_index "exercises", ["name"], name: "index_exercises_on_name", unique: true
 
+  create_table "favorite_exercises", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "exercise_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "muscle_groups", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "muscle_group_id"
   end
 
   add_index "muscle_groups", ["name"], name: "index_muscle_groups_on_name", unique: true

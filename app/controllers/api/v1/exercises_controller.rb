@@ -4,43 +4,52 @@ class Api::V1::ExercisesController < ApplicationController
 
   def index
     begin
-      if !params[:filter].blank?
-        exercises = Exercise
-                      .joins("LEFT JOIN muscle_groups ON exercises.muscle_group_id = muscle_groups.id")
-                      .select('exercises.*, muscle_groups.name as muscle_group_name')
-                      .where("exercises.name LIKE ?", "#{params[:filter]}%")
-                      .order(muscle_group_id: :asc)
-      else
-        exercises = Exercise
-                      .joins("LEFT JOIN muscle_groups ON exercises.muscle_group_id = muscle_groups.id")
-                      .select('exercises.*, muscle_groups.name as muscle_group_name')
-                      .order(muscle_group_id: :asc)
-      end
-
-      if !params[:grouped].blank? && params[:grouped] == '1'
-        current_group = -1
-        exercises_grouped = []
-        empty = true
-        exercises.each_with_index do |ex, index|
-          if empty || ex.muscle_group_id != exercises_grouped[current_group][:muscle_group_id]
-            empty = false
-            current_group += 1
-            exercises_grouped << { exercises: [ex], muscle_group_name: ex.muscle_group_name, muscle_group_id: ex.muscle_group_id }
-          else
-            exercises_grouped[current_group][:exercises] << ex
-          end
-        end
-
-        response = exercises_grouped
-      else
-        response = exercises
-      end
-
-      render json: { exercises: response }, status: 200
+      exercises = Exercise.all
+      render json: { exercises: exercises }, status: 200
     rescue Exception => e
       render json: { status: 'error', error: e.message }, status: 500
     end
   end
+
+  # def index
+  #   begin
+  #     if !params[:filter].blank?
+  #       exercises = Exercise
+  #                     .joins("LEFT JOIN muscle_groups ON exercises.muscle_group_id = muscle_groups.id")
+  #                     .select('exercises.*, muscle_groups.name as muscle_group_name')
+  #                     .where("exercises.name LIKE ?", "#{params[:filter]}%")
+  #                     .order(muscle_group_id: :asc)
+  #     else
+  #       exercises = Exercise
+  #                     .joins("LEFT JOIN muscle_groups ON exercises.muscle_group_id = muscle_groups.id")
+  #                     .select('exercises.*, muscle_groups.name as muscle_group_name')
+  #                     .order(muscle_group_id: :asc)
+  #     end
+  #
+  #     if !params[:grouped].blank? && params[:grouped] == '1'
+  #       current_group = -1
+  #       exercises_grouped = []
+  #       empty = true
+  #       exercises.each_with_index do |ex, index|
+  #         if empty || ex.muscle_group_id != exercises_grouped[current_group][:muscle_group_id]
+  #           empty = false
+  #           current_group += 1
+  #           exercises_grouped << { exercises: [ex], muscle_group_name: ex.muscle_group_name, muscle_group_id: ex.muscle_group_id }
+  #         else
+  #           exercises_grouped[current_group][:exercises] << ex
+  #         end
+  #       end
+  #
+  #       response = exercises_grouped
+  #     else
+  #       response = exercises
+  #     end
+  #
+  #     render json: { exercises: response }, status: 200
+  #   rescue Exception => e
+  #     render json: { status: 'error', error: e.message }, status: 500
+  #   end
+  # end
 
   def create
     begin

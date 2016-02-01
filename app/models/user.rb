@@ -17,4 +17,7 @@ class User < ActiveRecord::Base
   has_many :programs
   has_many :tracks
   has_many :exercises
+
+  has_many :favorite_exercises
+  has_many :fav_exercises, through: :favorite_exercises, source: :exercise
 end

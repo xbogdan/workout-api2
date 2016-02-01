@@ -3,7 +3,7 @@ class Api::V1::MuscleGroupsController < ApplicationController
   respond_to :json
 
   def index
-    render json: { groups: MuscleGroup.all }, status: 200
+    render json: { muscle_groups: MuscleGroup.all }, status: 200
   end
 
   def create
