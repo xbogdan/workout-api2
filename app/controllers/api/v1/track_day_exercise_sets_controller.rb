@@ -12,9 +12,9 @@ class Api::V1::TrackDayExerciseSetsController < ApplicationController
 
       raise 'Invalid id.' unless track_day_exercise.user.id == current_user.id
 
-      track_day_exercise.track_day_exercise_sets.create! reps: params[:reps], weight: params[:weight]
+      set = track_day_exercise.track_day_exercise_sets.create! reps: params[:reps], weight: params[:weight]
 
-      res = {status: 'ok'}
+      res = {status: 'ok', id: set.id}
       status = 201
     rescue Exception => e
       res = {status: 'error', error: e.message}
