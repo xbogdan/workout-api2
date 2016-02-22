@@ -38,8 +38,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 set :bundle_flags, '--deployment'
 
-set :rails_env, 'production'
-
 namespace :deploy do
 
   after :restart, :clear_cache do
