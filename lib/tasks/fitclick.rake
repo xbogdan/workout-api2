@@ -40,26 +40,43 @@ namespace :fitclick do
 					# Exercise group
 					ex_big_group = ex.css(".exercise-calories-list-right_A").first.css('.exercise-item-footer>div:not(.exercise-calories-list-width_A)>.food-type-name>a').attribute('title').value
 					ex_group = ex.css(".exercise-calories-list-right_A").first.css('.exercise-item-footer>div.exercise-calories-list-width_A>.food-type-name>a').attribute('title').value
+
+					if ex_name == 'Reverse Fly'
+						ex_big_group = 'Shoulders'
+						ex_group = 'Rear Deltoids'
+					end
 				rescue NoMethodError
 					next
 				end
 
-				# 	puts "#{ex_name}\t\t - #{ex_group}"
-				exercise = Exercise.find_by_name ex_name
-				next if exercise
+				# puts "#{ex_name}\t\t - #{ex_big_group} - \t\t #{ex_group}"
 
 				bmg = MuscleGroup.find_by_name ex_big_group
 				if !bmg
 					bmg = MuscleGroup.create name: ex_big_group, muscle_group_id: nil
+				else
+					bmg.update name: ex_big_group
 				end
 
 				mg = MuscleGroup.find_by_name ex_group
 				if !mg
 					mg = MuscleGroup.create name: ex_group, muscle_group_id: bmg.id
+				else
+					mg.update name: ex_group
 				end
 
-				exercise = Exercise.create name: ex_name
-				exercise.exercise_muscle_groups.create muscle_group_id: mg.id, primary: true
+				exercise = Exercise.find_by_name ex_name
+				if !exercise
+					exercise = Exercise.create name: ex_name
+				end
+
+				emg = exercise.exercise_muscle_groups.find_by_muscle_group_id mg.id
+				if !emg
+					exercise.exercise_muscle_groups.create muscle_group_id: mg.id, primary: true
+				else
+					emg.update muscle_group_id: mg.id
+				end
+
 			end
 		end
 

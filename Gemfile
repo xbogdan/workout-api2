@@ -28,7 +28,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'unicorn'
 
 # Use Phusion Passenger as the app server
-gem 'passenger'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -38,6 +37,7 @@ group :production do
 end
 
 group :development, :test do
+  gem 'passenger'
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
 
