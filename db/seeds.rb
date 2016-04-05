@@ -32,43 +32,21 @@
 
 user = User.create(email: 'bogdan.boamfa@gmail.com', password: 'bogdan')
 
-program = user.programs.create(
-  name: 'Program 1',
-  goal: 'Strength',
-  level: 'Intermmediate',
-  private: false
-)
-
-4.times do |i|
-  day = program.program_days.create(
-    name: "Day "+i.to_s
-  )
-  4.times do |j|
-    pde = day.program_day_exercises.create(exercise_id: rand(1..7))
-    3.times do |j|
-      pde.program_day_exercise_sets.create(reps: rand(4..8))
-    end
-  end
-end
-
-
-user = User.create(email: 'bogdan.boamfa2@gmail.com', password: 'bogdan')
-
-program = user.programs.create(
-  name: 'Program 1',
-  goal: 'Strength',
-  level: 'Intermmediate',
-  private: false
-)
-
-4.times do |i|
-  day = program.program_days.create(
-    name: "Day "+i.to_s
-  )
-  4.times do |j|
-    pde = day.program_day_exercises.create(exercise_id: rand(1..7))
-    3.times do |j|
-      pde.program_day_exercise_sets.create(reps: rand(4..8))
-    end
-  end
-end
+# program = user.programs.create(
+#   name: 'Program 1',
+#   goal: 'Strength',
+#   level: 'Intermmediate',
+#   private: false
+# )
+#
+# 4.times do |i|
+#   day = program.program_days.create(
+#     name: "Day "+i.to_s
+#   )
+#   4.times do |j|
+#     pde = day.program_day_exercises.create(exercise_id: rand(1..7))
+#     3.times do |j|
+#       pde.program_day_exercise_sets.create(reps: rand(4..8))
+#     end
+#   end
+# end

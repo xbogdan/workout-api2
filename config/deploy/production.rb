@@ -52,7 +52,7 @@ set :conditionally_migrate, false
 # The server-based syntax can be used to override options:
 # ------------------------------------
 server 'home.boamfa.com',
-  user: 'osmc',
+  user: 'pi',
   roles: %w{web app},
   ssh_options: {
     user: 'pi', # overrides user setting above
